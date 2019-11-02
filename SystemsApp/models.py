@@ -14,8 +14,6 @@ class Sistema(models.Model):
     id_system=models.AutoField(primary_key=True)
     name=models.CharField(max_length=200)
     bd_name=models.CharField(max_length=200)
-    bd_password=models.CharField(max_length=200)
-    bd_username=models.CharField(max_length=200)
     bd_type= models.CharField(max_length=11, choices=TYPE_CHOICES)
     frequency=models.IntegerField(validators=[MinValueValidator(1)])
     type_frequency=models.CharField(max_length=11, choices=FREQUENCY_CHOICES)
@@ -23,7 +21,8 @@ class Sistema(models.Model):
     server_username=models.CharField(max_length=200)
     server_password=models.CharField(max_length=200)
     server_route_save=models.CharField(max_length=500, blank=True, null=True)
-    
+    copy_to_server=models.BooleanField(blank=True, default=False)
+    copy_to_drive=models.BooleanField(blank=True, default=False)
     def __str__(self):    
         '''Devuelve el modelo en tipo String'''
         return str(self.name)

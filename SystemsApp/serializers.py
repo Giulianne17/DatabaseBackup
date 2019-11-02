@@ -4,7 +4,7 @@ from .models import *
 class SistemaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sistema
-        fields = ('id_system','name','bd_name','bd_password','bd_username','bd_type','frequency','type_frequency','server_ip','server_username','server_password','server_route_save')
+        fields = ('id_system','name','bd_name','bd_type','frequency','type_frequency','server_ip','server_username','server_password','server_route_save','copy_to_server','copy_to_drive')
 
 
 class CopiaRespaldoSerializer(serializers.ModelSerializer):
