@@ -31,6 +31,7 @@ class CopiaRespaldo(models.Model):
     id_respaldo=models.AutoField(primary_key=True)
     id_system=models.ForeignKey(Sistema, on_delete=models.CASCADE)
     receptor_server_username=models.CharField(max_length=200)
+    receptor_password=models.CharField(max_length=200)
     receptor_server_ip=models.CharField(max_length=20,validators=[RegexValidator((re.compile('([0-9]{1,3}.?){4}')), ('ip incorrecta'), 'invalid')])
     receptor_route_save=models.CharField(max_length=500)    
     
