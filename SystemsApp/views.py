@@ -6,6 +6,7 @@ from SystemsApp.models import *
 from SystemsApp.serializers import *
 
 from django.http import Http404
+import json
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -23,8 +24,8 @@ class SystemsList(APIView):
     def post(self, request, format=None):
         serializer = SistemaSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            sis=Sistema.objects.get(id_system=serializer.id_system)
+            d=serializer.save()
+            sis=Sistema.objects.get(id_system=d.id_system)
             if sis.type_frequency=="days":
                 schedule, created = IntervalSchedule.objects.get_or_create(every=sis.frequency,period=IntervalSchedule.DAYS )
             elif sis.type_frequency=="hours":
@@ -33,7 +34,7 @@ class SystemsList(APIView):
                 schedule, created = IntervalSchedule.objects.get_or_create(every=sis.frequency,period=IntervalSchedule.MINUTES )
             elif sis.type_frequency=="seconds":
                 schedule, created = IntervalSchedule.objects.get_or_create(every=sis.frequency,period=IntervalSchedule.SECONDS ) 
-            pe=PeriodicTask.objects.create(interval=schedule, name=str(sis.id_system),task='SystemsApp.tasks.run_script', args=json.dumps(['sis.id_system']))
+            pe=PeriodicTask.objects.create(interval=schedule, name=str(sis.id_system),task='run_script', args=json.dumps([sis.id_system]))
             pe.enabled = True
             pe.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -57,10 +58,11 @@ class SystemsDetail(APIView):
     def put(self, request, pk, format=None):
         system = self.get_object(pk)
         serializer = SistemaSerializer(system, data=request.data)
+        print("PASO")
         if serializer.is_valid():
             serializer.save()
             pe=PeriodicTask.objects.filter(name=str(system.id_system))
-            sis=Sistema.objects.get(id_system=serializer.id_system)
+            sis=Sistema.objects.get(id_system=system.id_system)
             if sis.type_frequency=="days":
                 schedule, created = IntervalSchedule.objects.get_or_create(every=sis.frequency,period=IntervalSchedule.DAYS )
             elif sis.type_frequency=="hours":
