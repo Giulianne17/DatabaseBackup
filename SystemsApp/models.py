@@ -28,12 +28,15 @@ class Sistema(models.Model):
         return str(self.name)
 
 class CopiaRespaldo(models.Model):
+    TYPE_CHOICES = (('drive', 'Drive'),
+                   ('server', 'Server'))
     id_respaldo=models.AutoField(primary_key=True)
     id_system=models.ForeignKey(Sistema, on_delete=models.CASCADE)
     receptor_server_username=models.CharField(max_length=200)
     receptor_password=models.CharField(max_length=200, default="password")
     receptor_server_ip=models.CharField(max_length=20,validators=[RegexValidator((re.compile('([0-9]{1,3}.?){4}')), ('ip incorrecta'), 'invalid')])
-    receptor_route_save=models.CharField(max_length=500)    
+    receptor_route_save=models.CharField(max_length=500)   
+    receptor_type= models.CharField(max_length=11, choices=TYPE_CHOICES, default="server") 
     
     def __str__(self):    
         '''Devuelve el modelo en tipo String'''

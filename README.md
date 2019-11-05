@@ -27,6 +27,8 @@ Primero asegúrese de instalar:
 * Virtualenv (16.0.0)
 * Python (3.6.9)
 * pip (19.3.1)
+* sshpass
+* Redis
 
 ### Configuración de un entorno virtual
 
@@ -70,7 +72,50 @@ Y para aplicar las migraciones y actualizar la base de datos:
 ./migrate.sh
 ```
 
+### Para ejecutar la aplicación
 
+En una terminal se debe ejecutar el servidor de python con el comando:
 
+```
+python manage.py runserver
+```
 
+En paralelo en otra terminal se debe ejecutar el celery para que se realicen las tareas:
 
+```
+celery -A DatabaseBackupApp worker --beat --scheduler django --loglevel=info
+```
+
+### Ejemplo json
+
+En la tabla de Sistemas:
+
+{
+        "id_system": 1,
+        "name": "Sistema 1",
+        "bd_name": "backup.sql",
+        "bd_type": "postgresql",
+        "frequency": 11,
+        "type_frequency": "minutes",
+        "server_ip": "192.168.1.107",
+        "server_username": "user",
+        "server_password": "password",
+        "server_route_save": "home/",
+        "copy_to_server": true,
+        "copy_to_drive": true
+}
+
+Observación: Si tiene las opciones de copy_to_server o copy_to_drive en false, no se movera el respaldo a dicha opción. 
+
+En la tabla de CopiaRespaldo:
+
+{
+        "id_respaldo": 1,
+        "id_system": 1,
+        "receptor_server_username": "user2",
+        "receptor_password": "password2",
+        "receptor_server_ip": "192.168.1.107",
+        "receptor_route_save": "home/w/"
+}
+
+Observación: en esta última tabla se puede almacenar los drive y los servidores.

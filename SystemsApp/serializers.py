@@ -10,5 +10,5 @@ class SistemaSerializer(serializers.ModelSerializer):
 class CopiaRespaldoSerializer(serializers.ModelSerializer):
     class Meta:
         model = CopiaRespaldo
-        fields = ('id_respaldo','id_system','receptor_server_username','receptor_password','receptor_server_ip','receptor_route_save')
+        fields = ('id_respaldo','id_system','receptor_server_username','receptor_password','receptor_server_ip','receptor_route_save', 'receptor_type')
 

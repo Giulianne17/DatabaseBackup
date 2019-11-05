@@ -16,5 +16,10 @@ def run_script(pk):
     for j in p[:len(p)-1]:
         path= path + str(j)+"/"
     for i in respados:
-        subprocess.call(shlex.split('./Scripts/move_backup.sh '+ str(system.server_username)+ ' '+ str(system.server_ip)+ ' '+ str(system.server_password)+ ' '+ str(system.server_route_save)+ ' '+ str(i.receptor_password)+ ' '+ str(system.bd_name)+ ' '+ str(i.receptor_server_username)+ ' '+ str(i.receptor_server_ip)+ ' '+ str(i.receptor_route_save)+' '+str(path)))
+        if (not system.copy_to_server) and i.receptor_type=="server":
+            pass
+        elif (not system.copy_to_drive) and i.receptor_type=="drive":
+            pass  
+        else:
+            subprocess.call(shlex.split('./Scripts/move_backup.sh '+ str(system.server_username)+ ' '+ str(system.server_ip)+ ' '+ str(system.server_password)+ ' '+ str(system.server_route_save)+ ' '+ str(i.receptor_password)+ ' '+ str(system.bd_name)+ ' '+ str(i.receptor_server_username)+ ' '+ str(i.receptor_server_ip)+ ' '+ str(i.receptor_route_save)+' '+str(path)))
     return True  
