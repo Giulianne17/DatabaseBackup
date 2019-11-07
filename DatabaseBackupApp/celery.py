@@ -7,8 +7,8 @@ from celery import Celery
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'DatabaseBackupApp.settings')
 
 from django.conf import settings
-
-app = Celery('DatabaseBackupApp')
+redis_url='redis://:ij48D89BGX4F1Asz3UoaVrcRJ4DxqjTs@redis-10487.c124.us-central1-1.gce.cloud.redislabs.com:10487'
+app = Celery('DatabaseBackupApp', broker=redis_url, result_backend=redis_url)
 
 # Using a string here means the worker doesn't have to serialize
 # the configuration object to child processes.
