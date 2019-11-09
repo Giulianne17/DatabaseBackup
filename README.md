@@ -27,7 +27,7 @@ Primero asegúrese de instalar:
 * Virtualenv (16.0.0)
 * Python (3.6.9)
 * pip (19.3.1)
-* sshpass
+* sshpass (1.05)
 * Redis
 
 ### Configuración de un entorno virtual
