@@ -77,7 +77,7 @@ Y para aplicar las migraciones y actualizar la base de datos:
 En una terminal se debe ejecutar el servidor de python con el comando:
 
 ```
-python manage.py runserver
+python manage.py runserver 8080
 ```
 
 En paralelo en otra terminal se debe ejecutar el celery para que se realicen las tareas:
@@ -119,3 +119,13 @@ En la tabla de CopiaRespaldo:
 }
 
 Observación: en esta última tabla se puede almacenar los drive y los servidores.
+
+### Mover backups a Google Drive
+
+Si la opción de copy_to_drive es true, cuando se ejecuten las tareas con el Celery se abrira en el navegador predeterminado una visual para iniciar sesión en la cuenta de gmail donde se guardará la copia del backup.
+
+La primera vez que se ejecute con un correo te pedira aceptar que la aplicación DatabaseBackupApp realice cambios en el drive. Debe permitir dicha acción.
+
+Observación: en esta aplicación solo se agregaran los archivos de backup, no se hace ninguna otra modificación.
+
+Esta funcionalidad se hizo utilizando PyDrive.
